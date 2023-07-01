@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 
-export default function useAuth(code) {
+export default function useAuth(code: string) {
   const [accessToken, setAccessToken] = useState()
   const [refreshToken, setRefreshToken] = useState()
   const [expiresIn, setExpiresIn] = useState()
@@ -15,10 +15,10 @@ export default function useAuth(code) {
         setAccessToken(res.data.accessToken)
         setRefreshToken(res.data.refreshToken)
         setExpiresIn(res.data.expiresIn)
-        window.history.pushState({}, null, "/")
+        window.history.pushState({}, '', "/")
       })
       .catch(() => {
-        window.location = "/"
+        (window as Window).location = '/'
       })
   }, [code])
 
@@ -34,7 +34,7 @@ export default function useAuth(code) {
           setExpiresIn(res.data.expiresIn)
         })
         .catch(() => {
-          window.location = "/"
+          (window as Window).location = '/'
         })
     }, (expiresIn - 60) * 1000)
 
