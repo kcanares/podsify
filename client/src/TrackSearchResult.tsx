@@ -3,7 +3,7 @@
 // export default function TrackSearchResult({ track, chooseTrack }) {
 //   function handlePlay() {
 //     chooseTrack(track)
-//   } 
+//   }
 
 //   return (
 //     <div

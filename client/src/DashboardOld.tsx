@@ -15,7 +15,7 @@
 //   artist: string;
 // }
 
-// interface Show extends Track {  
+// interface Show extends Track {
 //   uri: string;
 //   showUrl: string;
 // }
@@ -64,11 +64,11 @@
 //     let cancel = false
 //     spotifyApi.searchShows(search).then(res => {
 //       if (cancel || !res.body.shows) return;
-      
+
 //       const shows: Show[] =  res.body.shows.items.map(show => {
 //           const smallestShowImage = show.images.reduce(
 //             (smallest, image) => {
-//               if (image.height && smallest.height 
+//               if (image.height && smallest.height
 //                 && image.height < smallest.height) return image
 //               return smallest
 //             },
@@ -84,7 +84,7 @@
 //         })
 //       setSearchResults(shows);
 //       }
-//     )  
+//     )
 //     return () => {
 //       cancel = true;
 //       return undefined;
