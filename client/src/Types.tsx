@@ -11,6 +11,6 @@ export interface MediaState {
 }
 
 export enum MediaType {
-  EPISODE,
-  PLAYLIST,
+  EPISODE = "episode",
+  PLAYLIST = "playlist",
 }

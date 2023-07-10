@@ -10,6 +10,16 @@ const spotifyApi = new SpotifyWebApi({
   clientId: "8b945ef10ea24755b83ac50cede405a0",
 });
 
+const getSmallestImage = (
+  item: SpotifyApi.EpisodeObjectSimplified | SpotifyApi.PlaylistObjectSimplified
+) => {
+  return item.images.reduce((smallest, image) => {
+    if (image.height && smallest.height && image.height < smallest.height)
+      return image;
+    return smallest;
+  }, item.images[0]);
+};
+
 export const Dashboard = ({ code }: { code: string }) => {
   const accessToken = useAuth(code);
   const [episode, setEpisode] = useState<MediaItem>();
@@ -28,11 +38,12 @@ export const Dashboard = ({ code }: { code: string }) => {
         setMedia={setEpisode}
         mediaType={MediaType.EPISODE}
       />
-      {/* <MediaSelector
+      <MediaSelector
         spotifyApi={spotifyApi}
         media={playlist}
         setMedia={setPlaylist}
-      /> */}
+        mediaType={MediaType.PLAYLIST}
+      />
     </Container>
   );
 };

@@ -28,7 +28,7 @@ const searchSpotifyEpisodes = ({
 }) => {
   spotifyApi.searchEpisodes(search).then((res) => {
     if (cancel || !res.body.episodes) return;
-    const shows: MediaItem[] = res.body.episodes.items.map((show) => {
+    const episodes: MediaItem[] = res.body.episodes.items.map((show) => {
       const smallestShowImage = getSmallestImage(show);
       return {
         artist: "",
@@ -37,7 +37,33 @@ const searchSpotifyEpisodes = ({
         imageUrl: smallestShowImage.url,
       };
     });
-    setSearchResults(shows);
+    setSearchResults(episodes);
+  });
+};
+
+const searchSpotifyPlaylists = ({
+  spotifyApi,
+  cancel,
+  search,
+  setSearchResults,
+}: {
+  spotifyApi: SpotifyWebApi;
+  cancel: boolean;
+  search: string;
+  setSearchResults: React.Dispatch<React.SetStateAction<MediaItem[]>>;
+}) => {
+  spotifyApi.searchPlaylists(search).then((res) => {
+    if (cancel || !res.body.playlists) return;
+    const playlists: MediaItem[] = res.body.playlists.items.map((playlist) => {
+      const smallestShowImage = getSmallestImage(playlist);
+      return {
+        artist: "",
+        title: playlist.name,
+        uri: playlist.uri,
+        imageUrl: smallestShowImage.url,
+      };
+    });
+    setSearchResults(playlists);
   });
 };
 
@@ -65,6 +91,8 @@ export const MediaSelector = ({
 
     if (mediaType === MediaType.EPISODE) {
       searchSpotifyEpisodes({ spotifyApi, cancel, search, setSearchResults });
+    } else if (mediaType === MediaType.PLAYLIST) {
+      searchSpotifyPlaylists({ spotifyApi, cancel, search, setSearchResults });
     }
   }, [search]);
 
@@ -76,7 +104,7 @@ export const MediaSelector = ({
         <>
           <Form.Control
             type="search"
-            placeholder="search episode"
+            placeholder={"search " + mediaType}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
