@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useAuth from "./useAuth";
 import { Container, Form, Media } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import { MediaItem, MediaType } from "./Types";
 import MediaSearchResult from "./TrackSearchResult";
+import SpotifyApiContext from "./SpotifyApiContext";
 
 const getSmallestImage = (
   item: SpotifyApi.EpisodeObjectSimplified | SpotifyApi.PlaylistObjectSimplified
@@ -68,16 +69,16 @@ const searchSpotifyPlaylists = ({
 };
 
 export const MediaSelector = ({
-  spotifyApi,
   setMedia,
   mediaType,
 }: {
-  spotifyApi: SpotifyWebApi;
   setMedia: React.Dispatch<React.SetStateAction<MediaItem | undefined>>;
   mediaType: MediaType;
 }) => {
   const [search, setSearch] = useState<string>("");
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
+
+  const spotifyApi = useContext(SpotifyApiContext);
 
   useEffect(() => {
     if (!search) {

@@ -4,17 +4,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import { MediaItem } from "./Types";
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-const EpisodePlayer = async ({
-  spotifyApi,
-  episode,
-  setIsEpisodePlaying,
-}: {
-  spotifyApi: SpotifyWebApi;
-  episode: MediaItem;
-  setIsEpisodePlaying: React.Dispatch<
-    React.SetStateAction<boolean | undefined>
-  >;
-}) => {
+const EpisodePlayer = ({ episode }: { episode: MediaItem }) => {
   const [play, setPlay] = useState(false);
 
   // spotifyApi.play({i})
@@ -35,12 +25,7 @@ const EpisodePlayer = async ({
   // if get playback > playbacktimeoffset + 15
   // pause. set playEpisode false. set playbacktime offset
   //
-  setIsEpisodePlaying(true);
-  console.log("playing music");
-  const res = await delay(5000);
   // await setTimeout(900000);   // wait 15 minutes
-  console.log("stop playing music");
-  setIsEpisodePlaying(false);
   return <>mediaItem[0].name</>;
 };
 
