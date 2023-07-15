@@ -69,12 +69,10 @@ const searchSpotifyPlaylists = ({
 
 export const MediaSelector = ({
   spotifyApi,
-  media,
   setMedia,
   mediaType,
 }: {
   spotifyApi: SpotifyWebApi;
-  media: MediaItem | undefined;
   setMedia: React.Dispatch<React.SetStateAction<MediaItem | undefined>>;
   mediaType: MediaType;
 }) => {
@@ -98,27 +96,23 @@ export const MediaSelector = ({
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      {media ? (
-        media.title
-      ) : (
-        <>
-          <Form.Control
-            type="search"
-            placeholder={"search " + mediaType}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-            {searchResults.map((media) => (
-              <MediaSearchResult
-                media={media}
-                key={media.uri}
-                setMedia={setMedia}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      <>
+        <Form.Control
+          type="search"
+          placeholder={"search " + mediaType}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+          {searchResults.map((media) => (
+            <MediaSearchResult
+              media={media}
+              key={media.uri}
+              setMedia={setMedia}
+            />
+          ))}
+        </div>
+      </>
     </Container>
   );
 };

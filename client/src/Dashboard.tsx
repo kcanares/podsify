@@ -11,6 +11,33 @@ const spotifyApi = new SpotifyWebApi({
   clientId: "8b945ef10ea24755b83ac50cede405a0",
 });
 
+const PlaylistEpisodeSearchbars = ({
+  setEpisode,
+  setPlaylist,
+}: {
+  setEpisode: React.Dispatch<React.SetStateAction<MediaItem | undefined>>;
+  setPlaylist: React.Dispatch<React.SetStateAction<MediaItem | undefined>>;
+}) => (
+  <>
+    <MediaSelector
+      spotifyApi={spotifyApi}
+      setMedia={setEpisode}
+      mediaType={MediaType.EPISODE}
+    />
+    <MediaSelector
+      spotifyApi={spotifyApi}
+      setMedia={setPlaylist}
+      mediaType={MediaType.PLAYLIST}
+    />
+  </>
+);
+
+const PlaylistEpisodePlayers = ({
+  isEpisodePlaying,
+}: {
+  isEpisodePlaying: boolean;
+}) => (isEpisodePlaying ? <p>episode</p> : <p>songs</p>);
+
 export const Dashboard = ({ code }: { code: string }) => {
   const accessToken = useAuth(code);
   const [episode, setEpisode] = useState<MediaItem>();
@@ -39,24 +66,12 @@ export const Dashboard = ({ code }: { code: string }) => {
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
       {!episode || !playlist ? (
-        <>
-          <MediaSelector
-            spotifyApi={spotifyApi}
-            media={episode}
-            setMedia={setEpisode}
-            mediaType={MediaType.EPISODE}
-          />
-          <MediaSelector
-            spotifyApi={spotifyApi}
-            media={playlist}
-            setMedia={setPlaylist}
-            mediaType={MediaType.PLAYLIST}
-          />
-        </>
-      ) : isEpisodePlaying ? (
-        <p>episode</p>
+        <PlaylistEpisodeSearchbars
+          setEpisode={setEpisode}
+          setPlaylist={setPlaylist}
+        />
       ) : (
-        <p>songs</p>
+        <PlaylistEpisodePlayers isEpisodePlaying={isEpisodePlaying} />
       )}
     </Container>
   );
