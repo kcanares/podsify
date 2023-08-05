@@ -32,7 +32,7 @@ const searchSpotifyEpisodes = ({
     const episodes: MediaItem[] = res.body.episodes.items.map((show) => {
       const smallestShowImage = getSmallestImage(show);
       return {
-        artist: "",
+        // artist: "", // TODO: update the wrapper to get show publisher
         title: show.name,
         uri: show.uri,
         imageUrl: smallestShowImage.url,
@@ -58,7 +58,8 @@ const searchSpotifyPlaylists = ({
     const playlists: MediaItem[] = res.body.playlists.items.map((playlist) => {
       const smallestShowImage = getSmallestImage(playlist);
       return {
-        artist: "",
+        creator: playlist.owner.display_name,
+        id: playlist.id,
         title: playlist.name,
         uri: playlist.uri,
         imageUrl: smallestShowImage.url,

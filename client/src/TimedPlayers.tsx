@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { MediaItem } from "./Types";
-import EpisodePlayer from "./EpisodePlayer";
 import SpotifyApiContext from "./SpotifyApiContext";
 
 export const TimedPlayers = ({
@@ -17,8 +16,6 @@ export const TimedPlayers = ({
   const [episodePosition, setEpisodePosition] = useState<number>(0); // where playback has paused and should start in the next interval
 
   useEffect(() => {
-    // let isEpisode = true;
-
     const timer = setInterval(
       () => setIsEpisodePlaying((prevState) => !prevState),
       episodeIntervalLength
@@ -30,6 +27,7 @@ export const TimedPlayers = ({
         position_ms: episodePosition,
       });
       // add songs to queue
+
       // calculate how long these episodes will take
     } else {
       setEpisodePosition(episodePosition + episodeIntervalLength);
@@ -47,7 +45,7 @@ export const TimedPlayers = ({
     };
   }, [isEpisodePlaying]);
 
-  return isEpisodePlaying ? <EpisodePlayer episode={episode} /> : <p>songs</p>;
+  return isEpisodePlaying ? <p>episode</p> : <p>songs</p>;
 };
 
 export default TimedPlayers;

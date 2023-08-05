@@ -1,7 +1,7 @@
 # TODO
 
 [x] Implement episode player to play episodes with a set time limit
-[ ] get playlist tracks
+[I] get playlist tracks
 [ ] separate selectors into separate components
 [ ] Switch between episode player and playlist and keep track of the right intervals
 [ ] Implement playlist player to play specified number of songs
@@ -11,3 +11,7 @@
 [ ] add sophistication to queues. before playing the episode, check if the queue is empty. if it isn't, add the queue time to the interval duration
 
 [ ] contribute to the README for spotify-web-api-node by saying that the add item is working
+
+## CODE STYLE
+
+[ ] extract searchbar into its own component

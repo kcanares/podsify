@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SpotifyPlayer from "react-spotify-web-playback";
 import SpotifyWebApi from "spotify-web-api-node";
-import { MediaItem } from "./Types";
+import { MediaItem } from "../Types";
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const EpisodePlayer = ({ episode }: { episode: MediaItem }) => {
