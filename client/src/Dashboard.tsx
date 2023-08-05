@@ -6,19 +6,6 @@ import MediaSelector from "./MediaSelector";
 import TimedPlayers from "./TimedPlayers";
 import SpotifyApiContext from "./SpotifyApiContext";
 
-const PlaylistEpisodeSearchbars = ({
-  setEpisode,
-  setPlaylist,
-}: {
-  setEpisode: React.Dispatch<React.SetStateAction<MediaItem | undefined>>;
-  setPlaylist: React.Dispatch<React.SetStateAction<MediaItem | undefined>>;
-}) => (
-  <>
-    <MediaSelector setMedia={setEpisode} mediaType={MediaType.EPISODE} />
-    <MediaSelector setMedia={setPlaylist} mediaType={MediaType.PLAYLIST} />
-  </>
-);
-
 export const Dashboard = ({ code }: { code: string }) => {
   const accessToken = useAuth(code);
   const [episode, setEpisode] = useState<MediaItem>();
@@ -31,16 +18,18 @@ export const Dashboard = ({ code }: { code: string }) => {
     spotifyApi.setAccessToken(accessToken);
   }, [accessToken]);
 
+  console.log(episode);
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      {!episode || !playlist ? (
-        <PlaylistEpisodeSearchbars
-          setEpisode={setEpisode}
-          setPlaylist={setPlaylist}
-        />
-      ) : (
-        <TimedPlayers episode={episode} playlist={playlist} />
+      {episode ? null : (
+        <MediaSelector setMedia={setEpisode} mediaType={MediaType.EPISODE} />
       )}
+      {playlist ? null : (
+        <MediaSelector setMedia={setPlaylist} mediaType={MediaType.PLAYLIST} />
+      )}
+      {episode != undefined && playlist != undefined ? (
+        <TimedPlayers episode={episode} playlist={playlist} />
+      ) : null}
     </Container>
   );
 };
