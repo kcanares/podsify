@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useAuth from "./useAuth";
 import { Container, Form } from "react-bootstrap";
 import { MediaItem, MediaType } from "./Types";
@@ -18,7 +18,6 @@ export const Dashboard = ({ code }: { code: string }) => {
     spotifyApi.setAccessToken(accessToken);
   }, [accessToken]);
 
-  console.log(episode);
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
       {episode ? null : (
