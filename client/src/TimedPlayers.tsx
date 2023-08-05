@@ -14,40 +14,38 @@ export const TimedPlayers = ({
   const spotifyApi = useContext(SpotifyApiContext);
   const episodeIntervalLength = 10000;
   const songsIntervalCount = 3;
+  const [episodePosition, setEpisodePosition] = useState<number>(0); // where playback has paused and should start in the next interval
 
   useEffect(() => {
-    // first play through before the interval switching
-    spotifyApi.play({ uris: [episode.uri] });
-    let episodePosition = 0; // where playback has paused and should start in the next interval
-    let isEpisode = true;
+    // let isEpisode = true;
 
-    const timer = setInterval(async () => {
-      isEpisode = !isEpisode;
-      console.log(isEpisodePlaying);
-      if (isEpisode) {
-        spotifyApi.play({
-          uris: [episode.uri],
-          position_ms: episodePosition,
-        });
-        // add songs to queue
-        // calculate how long these episodes will take
-      } else {
-        episodePosition += episodeIntervalLength;
-        // play next items on queue
-        // set interval to queue length
-        spotifyApi.play({
-          context_uri: playlist.uri,
-          // offset: { position: episodePosition },
-        });
-        setIsEpisodePlaying(isEpisode);
-      }
-    }, episodeIntervalLength);
+    const timer = setInterval(
+      () => setIsEpisodePlaying((prevState) => !prevState),
+      episodeIntervalLength
+    );
+
+    if (isEpisodePlaying) {
+      spotifyApi.play({
+        uris: [episode.uri],
+        position_ms: episodePosition,
+      });
+      // add songs to queue
+      // calculate how long these episodes will take
+    } else {
+      setEpisodePosition(episodePosition + episodeIntervalLength);
+      // play next items on queue
+      // set interval to queue length
+      spotifyApi.play({
+        context_uri: playlist.uri,
+        // offset: { position: episodePosition },
+      });
+    }
 
     // Clean up the timer when the component unmounts
     return () => {
       clearInterval(timer);
     };
-  }, [episode, playlist]);
+  }, [isEpisodePlaying]);
 
   return isEpisodePlaying ? <EpisodePlayer episode={episode} /> : <p>songs</p>;
 };
