@@ -6,3 +6,4 @@
 [ ] Fix selector UI such that the selectors will stay in place after a search has been done
 [ ] Make time intervals configurable
 [ ] make UI for playlist and songs to look prettier
+[ ] add sophistication to queues. before playing the episode, check if the queue is empty. if it isn't, add the queue time to the interval duration

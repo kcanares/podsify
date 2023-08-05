@@ -12,21 +12,36 @@ export const TimedPlayers = ({
 }) => {
   const [isEpisodePlaying, setIsEpisodePlaying] = useState<boolean>(true);
   const spotifyApi = useContext(SpotifyApiContext);
+  const episodeIntervalLength = 10000;
+  const songsIntervalCount = 3;
 
   useEffect(() => {
     // first play through before the interval switching
     spotifyApi.play({ uris: [episode.uri] });
-    setIsEpisodePlaying(true);
+    let episodePosition = 0; // where playback has paused and should start in the next interval
+    let isEpisode = true;
 
     const timer = setInterval(async () => {
-      setIsEpisodePlaying((playState) => !playState);
-
-      if (isEpisodePlaying) {
-        spotifyApi.play({ uris: [episode.uri] });
+      isEpisode = !isEpisode;
+      console.log(isEpisodePlaying);
+      if (isEpisode) {
+        spotifyApi.play({
+          uris: [episode.uri],
+          position_ms: episodePosition,
+        });
+        // add songs to queue
+        // calculate how long these episodes will take
       } else {
-        spotifyApi.pause();
+        episodePosition += episodeIntervalLength;
+        // play next items on queue
+        // set interval to queue length
+        spotifyApi.play({
+          context_uri: playlist.uri,
+          // offset: { position: episodePosition },
+        });
+        setIsEpisodePlaying(isEpisode);
       }
-    }, 10000); // 60,000 milliseconds = 1 minute
+    }, episodeIntervalLength);
 
     // Clean up the timer when the component unmounts
     return () => {

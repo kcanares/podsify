@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import useAuth from "./useAuth";
-import { Container, Form } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { MediaItem, MediaType } from "./Types";
 import MediaSelector from "./MediaSelector";
 import TimedPlayers from "./TimedPlayers";
