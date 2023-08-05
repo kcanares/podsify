@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MediaItem } from "./Types";
 import EpisodePlayer from "./EpisodePlayer";
+import SpotifyApiContext from "./SpotifyApiContext";
 
 export const TimedPlayers = ({
   episode,
@@ -9,14 +10,22 @@ export const TimedPlayers = ({
   episode: MediaItem;
   playlist: MediaItem;
 }) => {
-  const [isEpisodePlaying, setIsEpisodePlaying] = useState<boolean>(false);
+  const [isEpisodePlaying, setIsEpisodePlaying] = useState<boolean>(true);
+  const spotifyApi = useContext(SpotifyApiContext);
 
   useEffect(() => {
-    if (!episode && !playlist) return;
+    // first play through before the interval switching
+    spotifyApi.play({ uris: [episode.uri] });
+    let isEpisodePlaying = true;
 
-    // Toggle between components every minute
     const timer = setInterval(() => {
-      setIsEpisodePlaying((prevState) => !prevState);
+      isEpisodePlaying = !isEpisodePlaying;
+
+      if (isEpisodePlaying) {
+        spotifyApi.play({ uris: [episode.uri] });
+      } else {
+        spotifyApi.pause();
+      }
     }, 10000); // 60,000 milliseconds = 1 minute
 
     // Clean up the timer when the component unmounts
