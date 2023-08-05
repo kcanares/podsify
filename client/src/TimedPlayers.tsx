@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { MediaItem } from "./Types";
 import EpisodePlayer from "./EpisodePlayer";
 import SpotifyApiContext from "./SpotifyApiContext";
@@ -16,10 +16,10 @@ export const TimedPlayers = ({
   useEffect(() => {
     // first play through before the interval switching
     spotifyApi.play({ uris: [episode.uri] });
-    let isEpisodePlaying = true;
+    setIsEpisodePlaying(true);
 
-    const timer = setInterval(() => {
-      isEpisodePlaying = !isEpisodePlaying;
+    const timer = setInterval(async () => {
+      setIsEpisodePlaying((playState) => !playState);
 
       if (isEpisodePlaying) {
         spotifyApi.play({ uris: [episode.uri] });
