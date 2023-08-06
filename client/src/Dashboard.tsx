@@ -26,7 +26,7 @@ export const Dashboard = ({ code }: { code: string }) => {
       {playlist ? null : (
         <MediaSelector setMedia={setPlaylist} mediaType={MediaType.PLAYLIST} />
       )}
-      {episode != undefined && playlist != undefined ? (
+      {episode !== undefined && playlist !== undefined ? (
         <TimedPlayers episode={episode} playlist={playlist} />
       ) : null}
     </Container>

@@ -39,7 +39,6 @@ export const TimedPlayers = ({
   const [episodePosition, setEpisodePosition] = useState<number>(0); // where playback has paused and should start in the next interval
   const [playlistPosition, setPlaylistPosition] = useState<number>(0);
   const [playlistTracks, setPlaylistTracks] = useState<Track[]>([]);
-  const [intervalDuration, setIntervalDuration] = useState<number>(0);
 
   async function requestNextPlaylistTrackUris(
     playlistPosition: number,
