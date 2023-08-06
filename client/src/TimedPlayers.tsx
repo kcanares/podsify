@@ -68,11 +68,11 @@ export const TimedPlayers = ({
         position_ms: episodePosition,
       });
       setTimeout(() => setIsEpisodePlaying(false), episodeIntervalLength);
-      setEpisodePosition(episodePosition + episodeIntervalLength);
+      setEpisodePosition((position) => position + episodeIntervalLength);
     } else {
       // add songs to queue
       requestNextPlaylistTrackUris(playlistPosition, songIntervalLength);
-      if (playlistTracks != undefined)
+      if (playlistTracks !== undefined)
         addTracksToQueue(spotifyApi, playlistTracks);
       else console.error("playlistTracks are undefined");
 
@@ -82,7 +82,7 @@ export const TimedPlayers = ({
       setTimeout(() => {
         setIsEpisodePlaying(true);
       }, tracksDuration);
-      setPlaylistPosition(playlistPosition + songIntervalLength);
+      setPlaylistPosition((position) => position + songIntervalLength);
     }
 
     return () => {};

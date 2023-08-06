@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import useAuth from "./useAuth";
-import { Container, Form, Media } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import { MediaItem, MediaType } from "./Types";
 import MediaSearchResult from "./TrackSearchResult";
@@ -95,7 +94,7 @@ export const MediaSelector = ({
     } else if (mediaType === MediaType.PLAYLIST) {
       searchSpotifyPlaylists({ spotifyApi, cancel, search, setSearchResults });
     }
-  }, [search]);
+  }, [search, spotifyApi, mediaType]);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
