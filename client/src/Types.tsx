@@ -3,7 +3,7 @@ export interface MediaItem {
   uri: string;
   imageUrl: string;
   creator?: string;
-  id?: string;
+  id: string;
 }
 
 export interface MediaState {

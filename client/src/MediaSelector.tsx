@@ -36,6 +36,7 @@ const searchSpotifyEpisodes = ({
         title: show.name,
         uri: show.uri,
         imageUrl: smallestShowImage.url,
+        id: show.id,
       };
     });
     setSearchResults(episodes);

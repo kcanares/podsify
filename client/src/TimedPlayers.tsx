@@ -14,6 +14,23 @@ export const TimedPlayers = ({
   const episodeIntervalLength = 10000;
   const songsIntervalCount = 3;
   const [episodePosition, setEpisodePosition] = useState<number>(0); // where playback has paused and should start in the next interval
+  const [playlistPosition, setPlaylistPosition] = useState<number>(0);
+  const [playlistTracks, setPlaylistTracks] = useState<string[]>();
+
+  async function requestNextPlaylistTrackUris(
+    playlistPosition: number,
+    songsIntervalCount: number
+  ) {
+    const res = await spotifyApi.getPlaylistTracks(playlist.id, {
+      offset: playlistPosition,
+      limit: songsIntervalCount,
+    });
+    const trackUris: string[] = res.body.items.flatMap(
+      (item) => item.track?.uri || []
+    );
+
+    setPlaylistTracks(trackUris);
+  }
 
   useEffect(() => {
     const timer = setInterval(
@@ -27,7 +44,7 @@ export const TimedPlayers = ({
         position_ms: episodePosition,
       });
       // add songs to queue
-
+      requestNextPlaylistTrackUris(playlistPosition, songsIntervalCount);
       // calculate how long these episodes will take
     } else {
       setEpisodePosition(episodePosition + episodeIntervalLength);
@@ -43,7 +60,7 @@ export const TimedPlayers = ({
     return () => {
       clearInterval(timer);
     };
-  }, [isEpisodePlaying]);
+  }, [isEpisodePlaying, playlistTracks]);
 
   return isEpisodePlaying ? <p>episode</p> : <p>songs</p>;
 };

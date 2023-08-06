@@ -17,7 +17,7 @@ export default function MediaSearchResult({
       <img src={media.imageUrl} style={{ height: "64px", width: "64px" }} />
       <div className="ml-3">
         <div>{media.title}</div>
-        <div className="text-muted">{media.artist}</div>
+        <div className="text-muted">{media.creator}</div>
       </div>
     </div>
   );
