@@ -58,10 +58,10 @@ export const TimedPlayers = ({
       });
       const trackUris = res.body.items
         .map((item) => item.track)
-        .filter((track) => track !== undefined && track !== null)
+        .filter((track) => !!track)
         .map((track) => ({
-          uri: track.uri,
-          duration: track.duration_ms,
+          uri: track!.uri,
+          duration: track!.duration_ms,
         }));
 
       setPlaylistTracks(trackUris);
@@ -101,7 +101,7 @@ export const TimedPlayers = ({
   }, [isEpisodePlaying, episodeIntervalLength, playlistTracks]);
 
   return isEpisodePlaying ? (
-    <p>episode is playling</p>
+    <p>episode is playing</p>
   ) : (
     <p>songs are playing</p>
   );
