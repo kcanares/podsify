@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import useAuth from "./useAuth";
-import { Container, Form, Media } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import { MediaItem, MediaType } from "./Types";
 import MediaSearchResult from "./TrackSearchResult";
@@ -32,10 +31,11 @@ const searchSpotifyEpisodes = ({
     const episodes: MediaItem[] = res.body.episodes.items.map((show) => {
       const smallestShowImage = getSmallestImage(show);
       return {
-        artist: "",
+        // artist: "", // TODO: update the wrapper to get show publisher
         title: show.name,
         uri: show.uri,
         imageUrl: smallestShowImage.url,
+        id: show.id,
       };
     });
     setSearchResults(episodes);
@@ -58,7 +58,8 @@ const searchSpotifyPlaylists = ({
     const playlists: MediaItem[] = res.body.playlists.items.map((playlist) => {
       const smallestShowImage = getSmallestImage(playlist);
       return {
-        artist: "",
+        creator: playlist.owner.display_name,
+        id: playlist.id,
         title: playlist.name,
         uri: playlist.uri,
         imageUrl: smallestShowImage.url,
@@ -93,7 +94,7 @@ export const MediaSelector = ({
     } else if (mediaType === MediaType.PLAYLIST) {
       searchSpotifyPlaylists({ spotifyApi, cancel, search, setSearchResults });
     }
-  }, [search]);
+  }, [search, spotifyApi, mediaType]);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>

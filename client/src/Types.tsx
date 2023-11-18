@@ -1,8 +1,9 @@
 export interface MediaItem {
   title: string;
-  artist: string;
   uri: string;
   imageUrl: string;
+  creator?: string;
+  id: string;
 }
 
 export interface MediaState {
