@@ -8,7 +8,7 @@ export default function useAuth(code: string) {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3001/login", {
+      .post(process.env.SERVER_URL + "/login", {
         code,
       })
       .then((res) => {
@@ -26,7 +26,7 @@ export default function useAuth(code: string) {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(() => {
       axios
-        .post("http://localhost:3001/refresh", {
+        .post(process.env.SERVER_URL + "/refresh", {
           refreshToken,
         })
         .then((res) => {

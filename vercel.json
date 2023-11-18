@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "/api/*": {
+      "src": "api/*.js",
+      "method": ["GET", "POST"]
+    }
+  }
+}
