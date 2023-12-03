@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const SERVER_ROOT = '/api'
 
-app.post(SERVER_ROOT + "/refresh", (req, res) => {
+app.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
   const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.REDIRECT_URI,
@@ -35,7 +35,7 @@ app.post(SERVER_ROOT + "/refresh", (req, res) => {
     });
 });
 
-app.post(SERVER_ROOT + "/login", (req, res) => {
+app.post("/login", (req, res) => {
   const code = req.body.code;
   const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.REDIRECT_URI,
@@ -58,11 +58,7 @@ app.post(SERVER_ROOT + "/login", (req, res) => {
     });
 });
 
-app.get(SERVER_ROOT + "/lyrics", async (req, res) => {
-  const lyrics =
-    (await lyricsFinder(req.query.artist, req.query.track)) ||
-    "No Lyrics Found";
-  res.json({ lyrics });
-});
+
+app.listen(3001)
 
 module.exports = app;
