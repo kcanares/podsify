@@ -3,10 +3,10 @@
 ## Basic functionality
 
 [x] Implement episode player to play episodes with a set time limit
-[I] get playlist tracks
-[ ] separate playlist/podcast selectors into separate components. Make the innermost components fp style
+[X] get playlist tracks
+[ ] separate playlist/podcast selectors into separate components. Make the innermost components functional programming style
 [ ] Switch between episode player and playlist and keep track of the right intervals
-[ ] Implement playlist player to play specified number of songs
+[ ] Implement playlist player to play specified number
 [ ] Make time intervals configurable
 [ ] add sophistication to queues. before playing the episode, check if the queue is empty. if it isn't, add the queue time to the interval duration
 
